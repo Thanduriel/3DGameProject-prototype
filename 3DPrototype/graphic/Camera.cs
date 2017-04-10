@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using _3DPrototype.game;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -20,23 +21,39 @@ namespace _3DPrototype.graphic
 				1f, 1000f);
 			viewMatrix = Matrix.CreateLookAt(camPosition, camTarget,
 						 new Vector3(0f, 1f, 0f));// Y up
-			worldMatrix = Matrix.CreateWorld(camTarget, Vector3.
-						  Forward, Vector3.Up);
+		}
+
+		public void Update()
+		{
+			if (!isAttached) return;
+
+			camTarget = target.Position;
+			camPosition = camTarget + new Vector3(0f, 0f, -5f);
+
+			viewMatrix = Matrix.CreateLookAt(camPosition, camTarget,
+						 new Vector3(0f, 1f, 0f));// Y up
 		}
 
 		public void Set(BasicEffect effect)
 		{
 			effect.AmbientLightColor = new Vector3(1f, 0, 0);
 			effect.View = viewMatrix;
-			effect.World = worldMatrix;
 			effect.Projection = projectionMatrix;
 		}
 
-		//Camera
+		public void Attach(Actor actor)
+		{
+			target = actor;
+			isAttached = true;
+		}
+
+		
 		Vector3 camTarget;
 		Vector3 camPosition;
 		Matrix projectionMatrix;
 		Matrix viewMatrix;
-		Matrix worldMatrix;
+
+		Actor target;
+		bool isAttached;
 	}
 }

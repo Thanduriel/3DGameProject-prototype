@@ -67,7 +67,7 @@ namespace _3DPrototype
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+			testActor.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -85,6 +85,7 @@ namespace _3DPrototype
 				foreach (BasicEffect effect in mesh.Effects)
 				{
 					camera.Set(effect);
+					effect.World = testActor.WorldMatrix;
 					effect.EnableDefaultLighting();
 				}
 				mesh.Draw();
