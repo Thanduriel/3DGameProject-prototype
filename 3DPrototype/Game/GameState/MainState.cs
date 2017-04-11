@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using _3DPrototype.Graphic;
+using Microsoft.Xna.Framework.Input;
 
 namespace _3DPrototype.Game.GameState
 {
@@ -14,6 +15,7 @@ namespace _3DPrototype.Game.GameState
 		public MainState(Camera camera)
 		{
 			_camera = camera;
+			_camera.Attach(_world.Player);
 			_effectHolder = Globals.ContentManager.Load<Model>("sphere");
 
 			Globals.MeshEffect = (BasicEffect)_effectHolder.Meshes[0].Effects[0];
@@ -24,14 +26,15 @@ namespace _3DPrototype.Game.GameState
 			// mesh rendering
 			_camera.Set(Globals.MeshEffect);
 			Globals.MeshEffect.EnableDefaultLighting();
-		
 			_world.Draw(gameTime);
-
 		}
 
 		public override void Update(GameTime gameTime)
 		{
 			_world.Update(gameTime);
+			KeyboardState state = Keyboard.GetState();
+
+			if (state.IsKeyDown(Keys.Space)) _world.Player.Velocity = new Vector3(0);
 		}
 
 		Camera _camera;

@@ -50,7 +50,7 @@ namespace _3DPrototype.Game
 			}
 		}
 
-		public Vector3 Position { get; private set; }
+		public Vector3 Position { get; set; }
 		public Quaternion Rotation;
 
 		public Model Model { get; private set; }

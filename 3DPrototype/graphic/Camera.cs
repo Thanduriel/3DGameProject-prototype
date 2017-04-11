@@ -14,24 +14,27 @@ namespace _3DPrototype.Graphic
 		public Camera (GraphicsDeviceManager graphics)
 		{
 			camTarget = new Vector3(0f, 0f, 0f);
-			camPosition = new Vector3(0f, 0f, -5);
+			camPosition = new Vector3(0f, 0f, 5);
+			prevPosition = camPosition;
 			projectionMatrix = Matrix.CreatePerspectiveFieldOfView(
-							   MathHelper.ToRadians(45f), graphics.
+							   MathHelper.ToRadians(75f), graphics.
 							   GraphicsDevice.Viewport.AspectRatio,
 				1f, 1000f);
 			viewMatrix = Matrix.CreateLookAt(camPosition, camTarget,
 						 new Vector3(0f, 1f, 0f));// Y up
 		}
-
-		public void Update()
+		
+		public void Update(GameTime gameTime)
 		{
 			if (!isAttached) return;
 
-			camTarget = target.Position;
-			camPosition = camTarget + new Vector3(0f, 0f, -5f);
+			camTarget = target.Position + new Vector3(0f, 0f, 5f);
+		//	camPosition.Normalize();
+			camPosition = prevPosition + (camTarget - prevPosition) * 0.033f * (float)gameTime.TotalGameTime.TotalSeconds;
+			prevPosition = camPosition;
 
-			viewMatrix = Matrix.CreateLookAt(camPosition, camTarget,
-						 new Vector3(0f, 1f, 0f));// Y up
+			viewMatrix = Matrix.CreateLookAt(camPosition, camPosition - new Vector3(0f,0f,5f),
+						 new Vector3(1f, 0f, 0f));// Y up
 		}
 
 		public void Set(BasicEffect effect)
@@ -50,6 +53,7 @@ namespace _3DPrototype.Graphic
 		
 		Vector3 camTarget;
 		Vector3 camPosition;
+		Vector3 prevPosition;
 		Matrix projectionMatrix;
 		Matrix viewMatrix;
 

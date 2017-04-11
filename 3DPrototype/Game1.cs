@@ -22,7 +22,11 @@ namespace _3DPrototype
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
+			graphics.PreferredBackBufferWidth = 1366;
+			graphics.PreferredBackBufferHeight = 768;
+			graphics.ApplyChanges();
+
+			Content.RootDirectory = "Content";
 
 			Globals.ContentManager = Content;
         }
@@ -75,12 +79,11 @@ namespace _3DPrototype
 
 			AGameState state = gameStates.Peek();
 			state.Update(gameTime);
+			camera.Update(gameTime);
 
 			AGameState newState = state.NewState;
 			if (state.IsFinished) gameStates.Pop();
 			if (newState != null) gameStates.Push(newState);
-
-			testActor.Update(gameTime);
 
             base.Update(gameTime);
         }
