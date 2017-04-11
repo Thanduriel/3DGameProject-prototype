@@ -1,4 +1,4 @@
-﻿using _3DPrototype.game;
+﻿using _3DPrototype.Game;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _3DPrototype.graphic
+namespace _3DPrototype.Graphic
 {
 	class Camera
 	{

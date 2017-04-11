@@ -43,8 +43,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Game1.cs" />
-    <Compile Include="game\Actor.cs" />
-    <Compile Include="graphic\Camera.cs" />
+    <Compile Include="Game\Actor.cs" />
+    <Compile Include="Game\GameState\AGameState.cs" />
+    <Compile Include="Game\GameState\MainState.cs" />
+    <Compile Include="Game\World.cs" />
+    <Compile Include="Globals.cs" />
+    <Compile Include="Graphic\Camera.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

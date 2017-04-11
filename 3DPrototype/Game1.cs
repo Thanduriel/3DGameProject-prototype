@@ -1,24 +1,30 @@
-﻿using Microsoft.Xna.Framework;
+﻿using _3DPrototype.Game.GameState;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace _3DPrototype
 {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class Game1 : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-		graphic.Camera camera;
+		Graphic.Camera camera;
 
-		game.Actor testActor;
+		Stack<AGameState> gameStates = new Stack<AGameState>();
+
+		Game.Actor testActor;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+			Globals.ContentManager = Content;
         }
 
         /// <summary>
@@ -29,9 +35,9 @@ namespace _3DPrototype
         /// </summary>
         protected override void Initialize()
         {
-			camera = new graphic.Camera(graphics);
-			testActor = new game.Actor(new Vector3(0f), Content.Load<Model>("sphere"));
-
+			camera = new Graphic.Camera(graphics);
+			testActor = new Game.Actor(new Vector3(0f), Content.Load<Model>("sphere"));
+			gameStates.Push(new MainState(camera));
 
 			base.Initialize();
         }
@@ -64,8 +70,15 @@ namespace _3DPrototype
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape) || gameStates.Count == 0)
                 Exit();
+
+			AGameState state = gameStates.Peek();
+			state.Update(gameTime);
+
+			AGameState newState = state.NewState;
+			if (state.IsFinished) gameStates.Pop();
+			if (newState != null) gameStates.Push(newState);
 
 			testActor.Update(gameTime);
 
@@ -80,7 +93,9 @@ namespace _3DPrototype
         {
             GraphicsDevice.Clear(Color.Green);
 
-			foreach (ModelMesh mesh in testActor.Model.Meshes)
+			gameStates.Peek().Draw(gameTime);
+
+/*			foreach (ModelMesh mesh in testActor.Model.Meshes)
 			{
 				foreach (BasicEffect effect in mesh.Effects)
 				{
@@ -89,7 +104,7 @@ namespace _3DPrototype
 					effect.EnableDefaultLighting();
 				}
 				mesh.Draw();
-			}
+			}*/
 
 			base.Draw(gameTime);
         }
