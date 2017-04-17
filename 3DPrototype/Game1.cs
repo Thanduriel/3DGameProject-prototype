@@ -39,9 +39,9 @@ namespace _3DPrototype
         /// </summary>
         protected override void Initialize()
         {
-			camera = new Graphic.Camera(graphics);
+			Globals.Camera = new Graphic.Camera(graphics);
 			testActor = new Game.Actor(new Vector3(0f), Content.Load<Model>("sphere"));
-			gameStates.Push(new MainState(camera));
+			gameStates.Push(new MainState(Globals.Camera));
 
 			base.Initialize();
         }
@@ -79,7 +79,7 @@ namespace _3DPrototype
 
 			AGameState state = gameStates.Peek();
 			state.Update(gameTime);
-			camera.Update(gameTime);
+			Globals.Camera.Update(gameTime);
 
 			AGameState newState = state.NewState;
 			if (state.IsFinished) gameStates.Pop();

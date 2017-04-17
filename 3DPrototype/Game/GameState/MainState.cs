@@ -16,7 +16,7 @@ namespace _3DPrototype.Game.GameState
 		{
 			_camera = camera;
 			_camera.Attach(_world.Player);
-			_effectHolder = Globals.ContentManager.Load<Model>("sphere");
+			_effectHolder = Globals.ContentManager.Load<Model>("cube");
 
 			Globals.MeshEffect = (BasicEffect)_effectHolder.Meshes[0].Effects[0];
 		}
@@ -32,9 +32,6 @@ namespace _3DPrototype.Game.GameState
 		public override void Update(GameTime gameTime)
 		{
 			_world.Update(gameTime);
-			KeyboardState state = Keyboard.GetState();
-
-			if (state.IsKeyDown(Keys.Space)) _world.Player.Velocity = new Vector3(0);
 		}
 
 		Camera _camera;

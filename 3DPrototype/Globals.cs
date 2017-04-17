@@ -11,5 +11,6 @@ namespace _3DPrototype
 		// some evil globals
 		public static Microsoft.Xna.Framework.Content.ContentManager ContentManager;
 		public static Microsoft.Xna.Framework.Graphics.BasicEffect MeshEffect;
+		public static Graphic.Camera Camera;
 	}
 }
