@@ -30,7 +30,6 @@ namespace _3DPrototype.Game.GameState
             spriteBatch.Draw(quitbutton, new Vector2(600, 500), selected == Button.Quit ? Color.Green : Color.White);
             
             spriteBatch.End();
-
         }
 
         public override void Update(GameTime gameTime)

@@ -24,7 +24,7 @@ namespace _3DPrototype
 			graphics.PreferredBackBufferWidth = 1366;
 			graphics.PreferredBackBufferHeight = 768;
 			graphics.ApplyChanges();
-			
+	
 			Content.RootDirectory = "Content";
 
 			Globals.ContentManager = Content;
@@ -41,6 +41,7 @@ namespace _3DPrototype
             spriteBatch = new SpriteBatch(graphics.GraphicsDevice);
 			Globals.Camera = new Graphic.Camera(graphics);
 			testActor = new Game.Actor(new Vector3(0f), Content.Load<Model>("sphere"));
+		//	gameStates.Push(new MainState(Globals.Camera));
 			gameStates.Push(new menustate(spriteBatch));
 
 			base.Initialize();
@@ -83,7 +84,11 @@ namespace _3DPrototype
 
 			AGameState newState = state.NewState;
 			if (state.IsFinished) gameStates.Pop();
-			if (newState != null) gameStates.Push(newState);
+			if (newState != null)
+			{
+				state.NewState = null;
+				gameStates.Push(newState);
+			}
 			if (gameStates.Count == 0) Exit(); // check again after states change 
 
             base.Update(gameTime);
@@ -99,6 +104,7 @@ namespace _3DPrototype
 			Window.Title = Globals.PlayerScore.ToString();
 
 			GraphicsDevice.Clear(Color.Green);
+			GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
 			gameStates.Peek().Draw(gameTime);
 

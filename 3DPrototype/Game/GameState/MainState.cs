@@ -19,13 +19,12 @@ namespace _3DPrototype.Game.GameState
 			_effectHolder = Globals.ContentManager.Load<Model>("cube");
 
 			Globals.MeshEffect = (BasicEffect)_effectHolder.Meshes[0].Effects[0];
+			Globals.PlayerScore = 0;
 		}
 
 		public override void Draw(GameTime gameTime)
 		{
 			// mesh rendering
-			_camera.Set(Globals.MeshEffect);
-			Globals.MeshEffect.EnableDefaultLighting();
 			_world.Draw(gameTime);
 		}
 
