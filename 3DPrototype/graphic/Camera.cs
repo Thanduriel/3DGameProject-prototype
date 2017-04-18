@@ -28,6 +28,10 @@ namespace _3DPrototype.Graphic
 		{
 			if (!isAttached) return;
 
+			// interpolate colors
+			AmbientColor += 0.5f * (float)gameTime.ElapsedGameTime.TotalSeconds
+				* (TargetAmbientColor - AmbientColor);
+
 			camTarget = target.Position + new Vector3(0f, 0f, 5f);
 		//	camPosition.Normalize();
 			camPosition = prevPosition + (camTarget - prevPosition) * 0.033f * (float)gameTime.TotalGameTime.TotalSeconds;
@@ -39,7 +43,7 @@ namespace _3DPrototype.Graphic
 
 		public void Set(BasicEffect effect)
 		{
-			effect.AmbientLightColor = new Vector3(1f, 0, 0);
+			effect.AmbientLightColor = AmbientColor;
 			effect.View = viewMatrix;
 			effect.Projection = projectionMatrix;
 		}
@@ -50,7 +54,9 @@ namespace _3DPrototype.Graphic
 			isAttached = true;
 		}
 
-		
+		public Vector3 AmbientColor { get; set; }
+		public Vector3 TargetAmbientColor { get; set; }
+
 		Vector3 camTarget;
 		Vector3 camPosition;
 		Vector3 prevPosition;

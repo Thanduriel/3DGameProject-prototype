@@ -15,7 +15,7 @@ namespace _3DPrototype.Game
 			_pawn = pawn;
 		}
 
-		const float MOVEMENTVELOCITY = 10f;
+		const float MOVEMENTVELOCITY = 4f;
 		const float MAXVELOCITY = 8f;
 
 		public void Update(GameTime gameTime)

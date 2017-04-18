@@ -45,6 +45,7 @@
     <Compile Include="Game\GameState\menustate.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Game\Actor.cs" />
+    <Compile Include="Game\Bouncer.cs" />
     <Compile Include="Game\Controller.cs" />
     <Compile Include="Game\GameState\AGameState.cs" />
     <Compile Include="Game\GameState\MainState.cs" />

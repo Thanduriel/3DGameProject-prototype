@@ -70,7 +70,7 @@ namespace _3DPrototype.Game
 			}
 		}
 
-		public void Draw()
+		public virtual void Draw()
 		{
 			WorldMatrix = Matrix.CreateScale(Scale)
 				* Matrix.CreateFromQuaternion(Rotation)
@@ -85,10 +85,8 @@ namespace _3DPrototype.Game
 			}
 		}
 
-		public void Collide(Actor player)
+		public virtual void Collide(Actor player)
 		{
-			Vector3 hitNormal = Vector3.Normalize(player.Position - Position);
-			player.Velocity += hitNormal * player.Velocity.Length();
 		}
 
 		public Vector3 Position { get; set; }

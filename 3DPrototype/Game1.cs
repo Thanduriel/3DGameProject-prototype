@@ -13,7 +13,6 @@ namespace _3DPrototype
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-		Graphic.Camera camera;
 
 		Stack<AGameState> gameStates = new Stack<AGameState>();
 
@@ -25,7 +24,7 @@ namespace _3DPrototype
 			graphics.PreferredBackBufferWidth = 1366;
 			graphics.PreferredBackBufferHeight = 768;
 			graphics.ApplyChanges();
-
+			
 			Content.RootDirectory = "Content";
 
 			Globals.ContentManager = Content;
@@ -75,7 +74,7 @@ namespace _3DPrototype
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape) || gameStates.Count == 0)
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
 			AGameState state = gameStates.Peek();
@@ -85,6 +84,7 @@ namespace _3DPrototype
 			AGameState newState = state.NewState;
 			if (state.IsFinished) gameStates.Pop();
 			if (newState != null) gameStates.Push(newState);
+			if (gameStates.Count == 0) Exit(); // check again after states change 
 
             base.Update(gameTime);
         }
@@ -95,7 +95,10 @@ namespace _3DPrototype
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Green);
+			// no easy font rendering available
+			Window.Title = Globals.PlayerScore.ToString();
+
+			GraphicsDevice.Clear(Color.Green);
 
 			gameStates.Peek().Draw(gameTime);
 

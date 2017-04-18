@@ -32,6 +32,9 @@ namespace _3DPrototype.Game.GameState
 		public override void Update(GameTime gameTime)
 		{
 			_world.Update(gameTime);
+
+			if (_world.IsCompleted)
+				IsFinished = true;
 		}
 
 		Camera _camera;

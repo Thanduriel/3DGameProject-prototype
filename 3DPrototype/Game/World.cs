@@ -12,9 +12,13 @@ namespace _3DPrototype.Game
 	class World
 	{
 		const float GroundGradient = 0.2f;
+		const float DefaultSizeX = 64f;
+		const float DefaultSizeY = 7f;
 
 		public World()
 		{
+			_worldSize = new Vector3(DefaultSizeX, DefaultSizeY, 10f);
+
 			Player = new Player(new Vector3(0,0, 5), Globals.ContentManager.Load<Model>("sphere"));
 			Player.AngularVelocity = -Vector3.UnitY;
 			_playerController = new Controller(Player);
@@ -24,10 +28,21 @@ namespace _3DPrototype.Game
 			Actor ground = new Actor(new Vector3(0, 0, 0), Globals.ContentManager.Load<Model>("cube"));
 			//		ground.AngularVelocity = Vector3.UnitY;
 			ground.Rotation *= Quaternion.CreateFromAxisAngle(new Vector3(0, 1, 0), -(float)Math.Atan(GroundGradient));
-			ground.Scale = new Vector3(1000f, 1f, 0.1f);
+			float a = PlaneZ(DefaultSizeX);
+			a *= a;
+			ground.Scale = new Vector3((float)Math.Sqrt(a + DefaultSizeX * DefaultSizeX), DefaultSizeY, 0.1f);
 			_gameObjects.Add(ground);
 
-			_gameObjects.Add(new Actor(new Vector3(-10, 0, PlaneZ(-10)), Globals.ContentManager.Load<Model>("sphere")));
+			// a simple world
+			_gameObjects.Add(new Bouncer(AlignedPosition(-10, 0)));
+			_gameObjects.Add(new Bouncer(AlignedPosition(-12, 3)));
+			_gameObjects.Add(new Bouncer(AlignedPosition(-12, -3)));
+
+			_gameObjects.Add(new Bouncer(AlignedPosition(-30, -6)));
+			_gameObjects.Add(new Bouncer(AlignedPosition(-31, -4)));
+			_gameObjects.Add(new Bouncer(AlignedPosition(-32, -2)));
+
+			_gameObjects.Add(new Bouncer(AlignedPosition(-63,0)));
 
 		}
 
@@ -52,15 +67,22 @@ namespace _3DPrototype.Game
 			}
 
 			// apply gravity
-			Player.Velocity += new Vector3(-0.6f, 0, -9.81f) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+			Player.Velocity += new Vector3(-2.2f, 0, -9.81f) * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
 			// collision: only the player can interact with other objects
 			float plane = PlaneZ(Player.Position.X);
-			if (Player.Position.Z < plane)
+			if (Player.Position.Z < plane 
+				&& Math.Abs(Player.Position.Y) < _worldSize.Y
+				&& Player.Position.X > -_worldSize.X )
 			{
 				Player.Position = new Vector3(Player.Position.X, Player.Position.Y, plane);
-				Player.Velocity.Z = 0f;
+				Player.Velocity.Z = PlaneZ(Player.Velocity.X);
 			}
+
+			if (Player.Position.Z - plane < -10f)
+				IsCompleted = true;
+
+
 		}
 
 		public static float PlaneZ(float x)
@@ -68,8 +90,16 @@ namespace _3DPrototype.Game
 			return x * GroundGradient;
 		}
 
+		public static Vector3 AlignedPosition(float x, float y)
+		{
+			return new Vector3(x, y, PlaneZ(x) + 0.2f);
+		}
+
+		public bool IsCompleted = false;
 		protected List<Actor> _gameObjects = new List<Actor>();
 		public Actor Player { get; private set; }
 		Controller _playerController;
+
+		Vector3 _worldSize;
 	}
 }

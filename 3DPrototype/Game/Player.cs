@@ -28,7 +28,20 @@ namespace _3DPrototype.Game
 			Vector3 axis = Vector3.Cross(new  Vector3(0.2f, 0f, 1f)/*Vector3.UnitZ*/, Velocity);
 			axis.Normalize();
 			AngularVelocity = axis * (Velocity.Length() / _circumference * 2 * (float)Math.PI);
-	//		if (Math.Abs(Velocity.Y) > Math.Abs(Velocity.X)) AngularVelocity *= -1f;
+
+			if (Math.Abs(Velocity.X) > Globals.MinimumVelocity)
+				Globals.Camera.TargetAmbientColor = new Vector3(0.2f, 0.5f, 0.2f);
+			else Globals.Camera.TargetAmbientColor = new Vector3(0.2f, 0.2f, 0.2f);
+		}
+
+		public override void Draw()
+		{
+			Vector3 col = Globals.Camera.AmbientColor;
+			if (Math.Abs(Velocity.X) > Globals.MinimumVelocity)
+				Globals.Camera.AmbientColor = new Vector3(1f, 0, 0);
+			base.Draw();
+
+			Globals.Camera.AmbientColor = col;
 		}
 	}
 }
