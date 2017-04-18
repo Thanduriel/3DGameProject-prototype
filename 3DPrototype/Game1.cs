@@ -39,9 +39,10 @@ namespace _3DPrototype
         /// </summary>
         protected override void Initialize()
         {
+            spriteBatch = new SpriteBatch(graphics.GraphicsDevice);
 			Globals.Camera = new Graphic.Camera(graphics);
 			testActor = new Game.Actor(new Vector3(0f), Content.Load<Model>("sphere"));
-			gameStates.Push(new MainState(Globals.Camera));
+			gameStates.Push(new menustate(spriteBatch));
 
 			base.Initialize();
         }

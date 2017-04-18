@@ -42,6 +42,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Game\GameState\menustate.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Game\Actor.cs" />
     <Compile Include="Game\Controller.cs" />

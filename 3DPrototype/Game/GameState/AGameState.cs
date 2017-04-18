@@ -12,7 +12,7 @@ namespace _3DPrototype.Game.GameState
 		public abstract void Draw(GameTime gameTime);
 		public abstract void Update(GameTime gameTime);
 
-		public bool IsFinished { get; private set; }
-		public AGameState NewState { get; private set; }
+		public bool IsFinished { get; protected set; }
+		public AGameState NewState { get; protected set; }
 	}
 }
