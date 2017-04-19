@@ -30,7 +30,7 @@ namespace _3DPrototype.Game
 			AngularVelocity = axis * (Velocity.Length() / _circumference * 2 * (float)Math.PI);
 
 			if (Math.Abs(Velocity.X) > Globals.MinimumVelocity)
-				Globals.Camera.TargetAmbientColor = new Vector3(0.2f, 0.5f, 0.2f);
+				Globals.Camera.TargetAmbientColor = new Vector3(0.1f, 0.1f, 0.1f) * Math.Abs(Velocity.X);
 			else Globals.Camera.TargetAmbientColor = new Vector3(0.2f, 0.2f, 0.2f);
 		}
 

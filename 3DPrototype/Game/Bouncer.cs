@@ -10,8 +10,12 @@ namespace _3DPrototype.Game
 {
 	class Bouncer : Actor
 	{
-		public Bouncer(Vector3 position) : base(position, Globals.ContentManager.Load<Model>("sphere"))
+		public Bouncer(Vector3 position) : base(position, Globals.ContentManager.Load<Model>("zylinder"))
 		{
+		//	Rotation = Rotation *= Quaternion.CreateFromAxisAngle(new Vector3(0, 1, 0), -(float)Math.Atan(0.2f));
+			Scale = new Vector3(1.1f);
+			BoundingRadius *= 0.8f;
+			_color = new Vector3(1, 0, 0);
 		}
 
 		public override void Collide(Actor player)

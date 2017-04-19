@@ -16,6 +16,8 @@ namespace _3DPrototype.Game
 			Model = model;
 			Scale = Vector3.One;
 
+			_color = new Vector3(0.5f);
+
 			// todo: move this to a more central position
 			foreach (ModelMesh mesh in Model.Meshes)
 			{
@@ -81,6 +83,8 @@ namespace _3DPrototype.Game
 				BasicEffect effect = (BasicEffect)mesh.Effects[0];
 				effect.World = WorldMatrix;
 				Globals.Camera.Set(effect);
+				effect.DiffuseColor = _color;
+				effect.PreferPerPixelLighting = PerPixelLightning;
 				mesh.Draw();
 			}
 		}
@@ -95,6 +99,8 @@ namespace _3DPrototype.Game
 		public float BoundingRadius;
 
 		public Model Model { get; private set; }
+		protected Vector3 _color;
+		public bool PerPixelLightning = false;
 
 		public Matrix WorldMatrix { get; private set; }
 

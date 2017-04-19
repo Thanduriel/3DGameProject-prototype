@@ -28,6 +28,7 @@ namespace _3DPrototype.Game
 			Actor ground = new Actor(new Vector3(0, 0, 0), Globals.ContentManager.Load<Model>("cube"));
 			//		ground.AngularVelocity = Vector3.UnitY;
 			ground.Rotation *= Quaternion.CreateFromAxisAngle(new Vector3(0, 1, 0), -(float)Math.Atan(GroundGradient));
+			ground.PerPixelLightning = true;
 			float a = PlaneZ(DefaultSizeX);
 			a *= a;
 			ground.Scale = new Vector3((float)Math.Sqrt(a + DefaultSizeX * DefaultSizeX), DefaultSizeY, 0.1f);
