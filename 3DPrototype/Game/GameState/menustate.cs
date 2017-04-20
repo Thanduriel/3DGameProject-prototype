@@ -14,6 +14,7 @@ namespace _3DPrototype.Game.GameState
     enum Button
     {
         Play,
+		Play2,
         Quit,
         Count
     }
@@ -27,7 +28,8 @@ namespace _3DPrototype.Game.GameState
 
             spriteBatch.Draw(background, new Rectangle(0, 0, 1400, 780), Color.White);
             spriteBatch.Draw(startbutton, new Vector2(600, 240), selected == Button.Play ? Color.Green : Color.White);
-            spriteBatch.Draw(quitbutton, new Vector2(600, 500), selected == Button.Quit ? Color.Green : Color.White);
+			spriteBatch.Draw(startbutton2, new Vector2(600, 370), selected == Button.Play2 ? Color.Green : Color.White);
+			spriteBatch.Draw(quitbutton, new Vector2(600, 500), selected == Button.Quit ? Color.Green : Color.White);
             
             spriteBatch.End();
         }
@@ -48,8 +50,9 @@ namespace _3DPrototype.Game.GameState
             }
             else if(newPressedKeys.Contains(Keys.Enter))
             {
-                if (selected == Button.Play) NewState = new MainState(Globals.Camera);
-                else if (selected == Button.Quit) IsFinished = true;
+                if (selected == Button.Play) NewState = new MainState(Globals.Camera,0);
+				else if(selected == Button.Play2) NewState = new MainState(Globals.Camera, 1);
+				else if (selected == Button.Quit) IsFinished = true;
             }
             oldState_ = newState;
             
@@ -64,13 +67,15 @@ namespace _3DPrototype.Game.GameState
             spriteBatch = Batch;
             background = Globals.ContentManager.Load<Texture2D>("Arrow");
             startbutton = Globals.ContentManager.Load<Texture2D>("startbutton");
-            quitbutton = Globals.ContentManager.Load<Texture2D>("exitbutton");
+			startbutton2 = Globals.ContentManager.Load<Texture2D>("startbutton");
+			quitbutton = Globals.ContentManager.Load<Texture2D>("exitbutton");
         }
         //Parameter erstellen
         SpriteBatch spriteBatch;
         private Texture2D background;
         private Texture2D startbutton;
-        private Texture2D quitbutton;
+		private Texture2D startbutton2;
+		private Texture2D quitbutton;
         private int selection_;
         Button selected;
         KeyboardState oldState_;

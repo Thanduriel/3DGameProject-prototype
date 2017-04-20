@@ -13,6 +13,9 @@ namespace _3DPrototype
 		public static Microsoft.Xna.Framework.Graphics.BasicEffect MeshEffect;
 		public static Graphic.Camera Camera;
 
+		// gameplay / config
+		public static float CameraHeight = 8f;
+
 		// player score
 		public static int PlayerScore;
 		public const float MinimumVelocity = 3.5f; // minimal velocity that gives points

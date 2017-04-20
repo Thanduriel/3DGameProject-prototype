@@ -12,8 +12,12 @@ namespace _3DPrototype.Game.GameState
 {
 	class MainState : AGameState
 	{
-		public MainState(Camera camera)
+		public MainState(Camera camera, int world)
 		{
+			if (world == 0)
+				_world = new World01();
+			else _world = new World02();
+
 			_camera = camera;
 			_camera.Attach(_world.Player);
 			_effectHolder = Globals.ContentManager.Load<Model>("cube");
@@ -37,7 +41,7 @@ namespace _3DPrototype.Game.GameState
 		}
 
 		Camera _camera;
-		protected World _world = new World();
+		protected World _world;
 		private Model _effectHolder;
 	}
 }

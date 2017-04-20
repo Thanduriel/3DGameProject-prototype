@@ -32,12 +32,12 @@ namespace _3DPrototype.Graphic
 			AmbientColor += 0.5f * (float)gameTime.ElapsedGameTime.TotalSeconds
 				* (TargetAmbientColor - AmbientColor);
 
-			camTarget = target.Position + new Vector3(0f, 0f, 5f);
+			camTarget = target.Position + new Vector3(-2f, 0f, Globals.CameraHeight);
 		//	camPosition.Normalize();
-			camPosition = prevPosition + (camTarget - prevPosition) * 0.033f * (float)gameTime.TotalGameTime.TotalSeconds;
+			camPosition = prevPosition + (camTarget - prevPosition) * 0.013f * (float)gameTime.TotalGameTime.TotalSeconds;
 			prevPosition = camPosition;
 
-			viewMatrix = Matrix.CreateLookAt(camPosition, camPosition - new Vector3(0f,0f,5f),
+			viewMatrix = Matrix.CreateLookAt(camPosition, camPosition - new Vector3(0f,0f,Globals.CameraHeight),
 						 new Vector3(1f, 0f, 0f));// Y up
 		}
 
@@ -52,6 +52,12 @@ namespace _3DPrototype.Graphic
 		{
 			target = actor;
 			isAttached = true;
+		}
+
+		public void Dettach()
+		{
+			target = null;
+			isAttached = false;
 		}
 
 		public Vector3 AmbientColor { get; set; }

@@ -25,7 +25,6 @@ namespace _3DPrototype.Game
 			float v = Math.Abs(player.Velocity.X); // only downward speed gives points
 			if (v > Globals.MinimumVelocity)
 			{
-
 				Globals.PlayerScore += (int)(Globals.VelocityToPoints * v * v);
 			}
 

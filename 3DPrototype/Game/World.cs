@@ -15,11 +15,12 @@ namespace _3DPrototype.Game
 		const float DefaultSizeX = 64f;
 		const float DefaultSizeY = 7f;
 
-		public World()
+		public World(float width = DefaultSizeY)
 		{
-			_worldSize = new Vector3(DefaultSizeX, DefaultSizeY, 10f);
+			_worldSize = new Vector3(DefaultSizeX, width, 10f);
 
 			Player = new Player(new Vector3(0,0, 5), Globals.ContentManager.Load<Model>("sphere"));
+			_playerIsDown = false;
 			Player.AngularVelocity = -Vector3.UnitY;
 			_playerController = new Controller(Player);
 			_gameObjects.Add(Player);
@@ -31,19 +32,8 @@ namespace _3DPrototype.Game
 			ground.PerPixelLightning = true;
 			float a = PlaneZ(DefaultSizeX);
 			a *= a;
-			ground.Scale = new Vector3((float)Math.Sqrt(a + DefaultSizeX * DefaultSizeX), DefaultSizeY, 0.1f);
+			ground.Scale = new Vector3((float)Math.Sqrt(a + DefaultSizeX * DefaultSizeX), width, 0.1f);
 			_gameObjects.Add(ground);
-
-			// a simple world
-			_gameObjects.Add(new Bouncer(AlignedPosition(-10, 0)));
-			_gameObjects.Add(new Bouncer(AlignedPosition(-12, 3)));
-			_gameObjects.Add(new Bouncer(AlignedPosition(-12, -3)));
-
-			_gameObjects.Add(new Bouncer(AlignedPosition(-30, -6)));
-			_gameObjects.Add(new Bouncer(AlignedPosition(-31, -4)));
-			_gameObjects.Add(new Bouncer(AlignedPosition(-32, -2)));
-
-			_gameObjects.Add(new Bouncer(AlignedPosition(-63,0)));
 
 		}
 
@@ -70,17 +60,24 @@ namespace _3DPrototype.Game
 			// apply gravity
 			Player.Velocity += new Vector3(-2.2f, 0, -9.81f) * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-			// collision: only the player can interact with other objects
+			// ground layer
 			float plane = PlaneZ(Player.Position.X);
 			if (Player.Position.Z < plane 
 				&& Math.Abs(Player.Position.Y) < _worldSize.Y
-				&& Player.Position.X > -_worldSize.X )
+				&& Player.Position.X > -_worldSize.X
+				&& !_playerIsDown)
 			{
 				Player.Position = new Vector3(Player.Position.X, Player.Position.Y, plane);
 				Player.Velocity.Z = PlaneZ(Player.Velocity.X);
 			}
 
-			if (Player.Position.Z - plane < -10f)
+			if (Player.Position.Z - plane < -1f)
+			{
+				Globals.Camera.Dettach();
+				_playerIsDown = true;
+			}
+
+			if (Player.Position.Z - plane < -50f)
 				IsCompleted = true;
 
 
@@ -99,6 +96,7 @@ namespace _3DPrototype.Game
 		public bool IsCompleted = false;
 		protected List<Actor> _gameObjects = new List<Actor>();
 		public Actor Player { get; private set; }
+		private bool _playerIsDown;
 		Controller _playerController;
 
 		Vector3 _worldSize;
