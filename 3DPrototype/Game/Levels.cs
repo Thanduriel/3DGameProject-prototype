@@ -48,7 +48,7 @@ namespace _3DPrototype.Game
 
 			//	_gameObjects.Add(new Obstacle(AlignedPosition(-35, 3), new Vector3(0.5f, 2f, 1f), (float)Math.PI * -0.25f));
 			_gameObjects.Add(new Obstacle(AlignedPosition(-46, 10), new Vector3(2f, 0.5f, 1f), (float)Math.PI * 0.25f));
-			_gameObjects.Add(new Obstacle(AlignedPosition(-46, -10), new Vector3(2f, 0.5f, 1f), (float)Math.PI * -0.25f));
+			_gameObjects.Add(new Obstacle(AlignedPosition(-46, -10), new Vector3(2f, 0.5f, 1f), (float)Math.PI * -1.25f));
 
 			_gameObjects.Add(new Bouncer(AlignedPosition(-64, 6)));
 		}
